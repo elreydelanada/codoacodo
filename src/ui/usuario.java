@@ -5,8 +5,10 @@
  */
 package ui;
 
+import dao.DepartamentoDao;
 import dao.ProvinciaDao;
 import dao.UsuarioDao;
+import entities.Departamento;
 import entities.Provincia;
 import entities.Usuario;
 import java.sql.Connection;
@@ -38,6 +40,7 @@ public class usuario extends javax.swing.JFrame {
         initComponents();       
         mostrarUsuarios(null);
         initProvinciaCombo();
+        initDepartamentoCombo();
     }
     
     public void initProvinciaCombo(){
@@ -50,6 +53,12 @@ public class usuario extends javax.swing.JFrame {
         }
        
         provinciaCombo.setModel(modelo);
+    }
+    
+    public void initDepartamentoCombo(){
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        departamentoCombo.setModel(modelo);
+        departamentoCombo.setEnabled(false);
     }
     
     public void mostrarUsuarios(String busqueda){
@@ -113,6 +122,8 @@ public class usuario extends javax.swing.JFrame {
         nuevoBtn = new javax.swing.JButton();
         provinciaCombo = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        departamentoCombo = new javax.swing.JComboBox<>();
 
         modificar.setText("Modificar");
         modificar.addActionListener(new java.awt.event.ActionListener() {
@@ -191,6 +202,10 @@ public class usuario extends javax.swing.JFrame {
 
         jLabel4.setText("Provincia:");
 
+        jLabel5.setText("Departamento:");
+
+        departamentoCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -200,32 +215,35 @@ public class usuario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(buscarTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(buscarBtn)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel4))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
                         .addGap(66, 66, 66)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(67, 67, 67)
-                                .addComponent(errorLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(dniTxt)
                             .addComponent(nombreTxt)
                             .addComponent(apellidoTxt)
                             .addComponent(dniErrorLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(provinciaCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(nuevoBtn)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(departamentoCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(guardarBtn)))))
+                                .addComponent(errorLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(nuevoBtn)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(buscarTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(buscarBtn)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(guardarBtn)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -249,18 +267,21 @@ public class usuario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(provinciaCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(17, 17, 17)
-                .addComponent(errorLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(guardarBtn)
-                    .addComponent(nuevoBtn))
-                .addGap(18, 18, 18)
+                    .addComponent(errorLbl)
+                    .addComponent(jLabel5)
+                    .addComponent(departamentoCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nuevoBtn)
+                    .addComponent(guardarBtn))
+                .addGap(61, 61, 61)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(buscarTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buscarBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -341,6 +362,11 @@ public class usuario extends javax.swing.JFrame {
         usuario.setDni(dni);
         usuario.setNombre(nombreTxt.getText());
         usuario.setApellido(apellidoTxt.getText());
+        Provincia prov = (Provincia)provinciaCombo.getSelectedItem();
+        System.out.println(prov.getId());        
+        Departamento dpto = (Departamento)departamentoCombo.getSelectedItem();
+        System.out.println(dpto.getId());
+        
         
         UsuarioDao udao = new UsuarioDao();
         udao.insert(usuario);
@@ -413,8 +439,17 @@ public class usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_nuevoBtnActionPerformed
 
     private void provinciaComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_provinciaComboActionPerformed
-        Provincia prov = (Provincia)provinciaCombo.getSelectedItem();        
-        System.out.println(prov.getId());
+        departamentoCombo.setEnabled(false);
+        Provincia prov = (Provincia)provinciaCombo.getSelectedItem();                
+        DepartamentoDao dptoDao = new DepartamentoDao();
+        LinkedList<Departamento> lista = dptoDao.getByProvinciaId(prov.getId());        
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        for (Departamento departamento : lista) {
+            modelo.addElement(departamento);
+        }
+        departamentoCombo.setModel(modelo);
+        departamentoCombo.setEnabled(true);
+                
     }//GEN-LAST:event_provinciaComboActionPerformed
     
     /**
@@ -456,6 +491,7 @@ public class usuario extends javax.swing.JFrame {
     private javax.swing.JTextField apellidoTxt;
     private javax.swing.JButton buscarBtn;
     private javax.swing.JTextField buscarTxt;
+    private javax.swing.JComboBox<String> departamentoCombo;
     private javax.swing.JLabel dniErrorLbl;
     private javax.swing.JTextField dniTxt;
     private javax.swing.JMenuItem eliminar;
@@ -465,6 +501,7 @@ public class usuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;

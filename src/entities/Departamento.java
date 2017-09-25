@@ -70,4 +70,11 @@ public class Departamento {
     public void setId_departamento(int id_departamento) {
         this.id_departamento = id_departamento;
     }
+
+    @Override
+    public String toString() {
+        return getDescripcion();
+    }
+    
+    
 }
