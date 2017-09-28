@@ -39,4 +39,21 @@ public class ProvinciaDao extends Dao{
             return null;
         }
     }
+    
+    public Provincia getById(int id){
+        try {
+            Connection conn = this.getConexion();
+            Statement s = conn.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM provincia WHERE id =" + id);
+            rs.next();
+            Provincia prov = new Provincia();
+            prov.setId(rs.getInt("id"));
+            prov.setDescripcion(rs.getString("descripcion"));
+            return prov;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProvinciaDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+    }
 }

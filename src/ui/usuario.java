@@ -362,11 +362,8 @@ public class usuario extends javax.swing.JFrame {
         usuario.setDni(dni);
         usuario.setNombre(nombreTxt.getText());
         usuario.setApellido(apellidoTxt.getText());
-        Provincia prov = (Provincia)provinciaCombo.getSelectedItem();
-        System.out.println(prov.getId());        
-        Departamento dpto = (Departamento)departamentoCombo.getSelectedItem();
-        System.out.println(dpto.getId());
-        
+        usuario.setProvincia((Provincia)provinciaCombo.getSelectedItem());
+        usuario.setDepartamento((Departamento)departamentoCombo.getSelectedItem());
         
         UsuarioDao udao = new UsuarioDao();
         udao.insert(usuario);
@@ -397,6 +394,9 @@ public class usuario extends javax.swing.JFrame {
         dniTxt.setText(String.valueOf(usuario.getDni()));
         nombreTxt.setText(usuario.getNombre());
         apellidoTxt.setText(usuario.getApellido());
+        
+        System.out.println(usuario.getProvincia().getId() + " " + usuario.getProvincia().getDescripcion());
+        System.out.println(usuario.getDepartamento().getId() + " " + usuario.getDepartamento().getDescripcion());
         
         guardarBtn.setText("Actualizar");
     }//GEN-LAST:event_modificarActionPerformed

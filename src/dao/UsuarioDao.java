@@ -25,10 +25,12 @@ public class UsuarioDao extends Dao {
     public void insert(Usuario usuario){
         try {                 
             Connection conn = this.getConexion();
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO usuario(dni, nombre, apellido) VALUES (?, ?, ?)");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO usuario(dni, nombre, apellido, id_provincia, id_departamento) VALUES (?, ?, ?, ?, ?)");
             ps.setInt(1, usuario.getDni());
             ps.setString(2, usuario.getNombre());
             ps.setString(3, usuario.getApellido());
+            ps.setInt(4, usuario.getProvincia().getId());
+            ps.setInt(5, usuario.getDepartamento().getId());
             ps.executeUpdate();      
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -86,6 +88,10 @@ public class UsuarioDao extends Dao {
             usuario.setDni(rs.getInt("dni"));
             usuario.setNombre(rs.getString("nombre"));
             usuario.setApellido(rs.getString("apellido"));
+            ProvinciaDao provDao = new ProvinciaDao();
+            usuario.setProvincia(provDao.getById(rs.getInt("id_provincia")));
+            DepartamentoDao deptoDao = new DepartamentoDao();
+            usuario.setDepartamento(deptoDao.getById(rs.getInt("id_departamento")));
             
             return usuario;
         } catch (SQLException ex) {

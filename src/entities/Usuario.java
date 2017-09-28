@@ -13,7 +13,9 @@ public class Usuario {
     private int id;
     private int dni;
     private String nombre;
-    private String apellido;    
+    private String apellido;
+    private Provincia provincia;
+    private Departamento departamento;
 
     /**
      * @return the id
@@ -69,5 +71,33 @@ public class Usuario {
      */
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    /**
+     * @return the provincia
+     */
+    public Provincia getProvincia() {
+        return provincia;
+    }
+
+    /**
+     * @param provincia the provincia to set
+     */
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
+    }
+
+    /**
+     * @return the departamento
+     */
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    /**
+     * @param departamento the departamento to set
+     */
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
     }
 }

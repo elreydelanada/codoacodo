@@ -41,4 +41,23 @@ public class DepartamentoDao extends Dao{
             return null;
         }
     }
+    
+    public Departamento getById(int id){
+        try {
+            Connection conn = this.getConexion();
+            Statement s = conn.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM departamento WHERE id = " + id);
+            rs.next();
+            Departamento departamento = new Departamento();
+            departamento.setId(rs.getInt("id"));
+            departamento.setDescripcion(rs.getString("descripcion"));
+            ProvinciaDao provDao = new ProvinciaDao();
+            departamento.setProvincia(provDao.getById(rs.getInt("id_provincia")));
+            departamento.setId_departamento(rs.getInt("id_departamento"));
+            return departamento;
+        } catch (SQLException ex) {
+            Logger.getLogger(DepartamentoDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }         
+    }
 }
