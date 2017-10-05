@@ -5,6 +5,7 @@
  */
 package dao;
 
+import entities.Provincia;
 import entities.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -124,6 +125,14 @@ public class UsuarioDao extends Dao {
                 usuario.setDni(rs.getInt("dni"));
                 usuario.setNombre(rs.getString("nombre"));
                 usuario.setApellido(rs.getString("apellido"));
+                
+                ProvinciaDao provDao = new ProvinciaDao();
+                Provincia prov       = provDao.getById(rs.getInt("id_provincia"));
+                usuario.setProvincia(prov);
+                
+                DepartamentoDao dptoDao = new DepartamentoDao();
+                usuario.setDepartamento(dptoDao.getById(rs.getInt("id_departamento")));
+                
                 lista.add(usuario);
             }
             return lista;

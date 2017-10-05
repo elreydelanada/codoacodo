@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.event.CellEditorListener;
 import javax.swing.table.DefaultTableModel;
@@ -67,6 +68,8 @@ public class usuario extends javax.swing.JFrame {
         modelo.addColumn("DNI");
         modelo.addColumn("Nombre");
         modelo.addColumn("Apellido");
+        modelo.addColumn("Provincia");
+        modelo.addColumn("Departamento");
         
         UsuarioDao udao = new UsuarioDao();
         LinkedList<Usuario> lista;
@@ -77,12 +80,14 @@ public class usuario extends javax.swing.JFrame {
             lista = udao.getAll();
         }           
         
-        Object[] data = new Object[4];
+        Object[] data = new Object[6];
         for (Usuario usuario : lista) {
             data[0] = usuario.getId();
             data[1] = usuario.getDni();
             data[2] = usuario.getNombre();
             data[3] = usuario.getApellido();
+            data[4] = usuario.getProvincia();
+            data[5] = usuario.getDepartamento();
             modelo.addRow(data);
         }        
         
@@ -393,14 +398,35 @@ public class usuario extends javax.swing.JFrame {
         this.id_modificar = usuario.getId();
         dniTxt.setText(String.valueOf(usuario.getDni()));
         nombreTxt.setText(usuario.getNombre());
-        apellidoTxt.setText(usuario.getApellido());
+        apellidoTxt.setText(usuario.getApellido());        
+                
+        /*for (int i = 0; i < provinciaCombo.getModel().getSize(); i++) {              
+            if(Provincia.class.cast(provinciaCombo.getItemAt(i)).getId() == usuario.getProvincia().getId()){
+                provinciaCombo.setSelectedIndex(i);                               
+            }                        
+        }*/
+        actualizarCombo(provinciaCombo, usuario.getProvincia().getDescripcion(), Provincia.class);
+        actualizarDptos();
+        actualizarCombo(departamentoCombo, usuario.getDepartamento().getDescripcion(), Departamento.class);
         
-        System.out.println(usuario.getProvincia().getId() + " " + usuario.getProvincia().getDescripcion());
-        System.out.println(usuario.getDepartamento().getId() + " " + usuario.getDepartamento().getDescripcion());
+        /*for (int i = 0; i < departamentoCombo.getModel().getSize(); i++) {              
+            if(Departamento.class.cast(departamentoCombo.getItemAt(i)).getId() == usuario.getDepartamento().getId()){
+                departamentoCombo.setSelectedIndex(i);                               
+            }                        
+        }*/
         
         guardarBtn.setText("Actualizar");
     }//GEN-LAST:event_modificarActionPerformed
 
+    private void actualizarCombo(JComboBox combo, String descripcion, Class clase){        
+        for (int i = 0; i < combo.getItemCount(); i++) {              
+            if(clase.cast(combo.getItemAt(i)).toString().equals(descripcion)){
+                combo.setSelectedIndex(i);                  
+                return;
+            }                        
+        }
+    }
+    
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
         if(JOptionPane.showConfirmDialog(this, "¿Desea Eliminar?") != 0){
             return;
@@ -439,6 +465,10 @@ public class usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_nuevoBtnActionPerformed
 
     private void provinciaComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_provinciaComboActionPerformed
+        actualizarDptos();
+    }//GEN-LAST:event_provinciaComboActionPerformed
+    
+    private void actualizarDptos(){
         departamentoCombo.setEnabled(false);
         Provincia prov = (Provincia)provinciaCombo.getSelectedItem();                
         DepartamentoDao dptoDao = new DepartamentoDao();
@@ -449,8 +479,7 @@ public class usuario extends javax.swing.JFrame {
         }
         departamentoCombo.setModel(modelo);
         departamentoCombo.setEnabled(true);
-                
-    }//GEN-LAST:event_provinciaComboActionPerformed
+    }
     
     /**
      * @param args the command line arguments
