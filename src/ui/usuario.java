@@ -5,6 +5,8 @@
  */
 package ui;
 
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
 import dao.DepartamentoDao;
 import dao.ProvinciaDao;
 import dao.UsuarioDao;
