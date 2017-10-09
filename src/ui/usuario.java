@@ -13,6 +13,10 @@ import dao.UsuarioDao;
 import entities.Departamento;
 import entities.Provincia;
 import entities.Usuario;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -511,27 +515,59 @@ public class usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_provinciaComboActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        /*calendario.setMinSelectableDate(new Date());
+
         
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.set(2017, GregorianCalendar.OCTOBER, 20); //Octubre = 9
-        calendario.setMaxSelectableDate(gc.getTime());        
         
-        Date fecha = calendario.getDate();   
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String fechaFormateda       =  dateFormat.format(fecha);
-        System.out.println(fechaFormateda);*/
+            /*calendario.setMinSelectableDate(new Date());
+            
+            GregorianCalendar gc = new GregorianCalendar();
+            gc.set(2017, GregorianCalendar.OCTOBER, 20); //Octubre = 9
+            calendario.setMaxSelectableDate(gc.getTime());
+            
+            Date fecha = calendario.getDate();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String fechaFormateda       =  dateFormat.format(fecha);
+            System.out.println(fechaFormateda);*/
+            
+            /*int dni      = 31151412;
+            String texto = String.valueOf("Pedro El escamoso");
+            String md5   = DigestUtils.md5Hex(texto);
+            System.out.println(md5);
+            System.out.println(md5.length());
+            String sha1  = DigestUtils.sha1Hex(md5);
+            System.out.println(sha1);
+            
+            String pass = DigestUtils.sha1Hex(DigestUtils.md5Hex("Pedro El escamoso"));
+            System.out.println(pass);*/
         
-        /*int dni      = 31151412;
-        String texto = String.valueOf("Pedro El escamoso");
-        String md5   = DigestUtils.md5Hex(texto);
-        System.out.println(md5);
-        System.out.println(md5.length());
-        String sha1  = DigestUtils.sha1Hex(md5);
-        System.out.println(sha1);
-                
-        String pass = DigestUtils.sha1Hex(DigestUtils.md5Hex("Pedro El escamoso"));
-        System.out.println(pass);*/
+        FileWriter fw          = null;
+        try {
+            UsuarioDao udao           = new UsuarioDao();
+            LinkedList<Usuario> lista = udao.getAll();
+            
+            File archivo          = new File("C:\\java\\archivo.csv");
+            fw                    = new FileWriter(archivo);
+            BufferedWriter bw     = new BufferedWriter(fw);
+            
+            for (Usuario usuario : lista) {
+                bw.write(usuario.getApellido() + ";");
+                bw.write(usuario.getNombre()+ ";");    
+                bw.write(usuario.getProvincia().getDescripcion() + ";");    
+                bw.write(usuario.getDepartamento() + ";");              
+                bw.newLine();            
+            }            
+            
+            bw.close();            
+        } catch (IOException ex) {
+            Logger.getLogger(usuario.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(usuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+      
     }//GEN-LAST:event_jButton2ActionPerformed
     
     private void actualizarDptos(){
